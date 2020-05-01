@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
+const params = new HttpParams()
+  .set('count', '100');
 @Injectable({
   providedIn: 'root'
 })
+
 export class QuizService {
 //----------------------------- Properties -----------------------------
   readonly rootUrl = 'http://jservice.io/api/';
@@ -11,9 +14,15 @@ export class QuizService {
   timer;
   seconds: number;
 
+
+
   constructor(private http: HttpClient) { }
 //----------------------------- Http Methods -----------------------------
-  getrandomQuestion() {
+  getRandomQuestion() {
     return this.http.get(this.rootUrl + 'random');
+  }
+
+  getCategories() {
+    return this.http.get(`${this.rootUrl}categories?${params.toString()}`);
   }
 }
