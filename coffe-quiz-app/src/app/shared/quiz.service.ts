@@ -5,10 +5,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class QuizService {
-  readonly rootUrl = 'http://jservice.io/api/'
+//----------------------------- Properties -----------------------------
+  readonly rootUrl = 'http://jservice.io/api/';
+  randomQuestion = [];
 
   constructor(private http: HttpClient) { }
-
+//----------------------------- Http Methods -----------------------------
   getrandomQuestion() {
     return this.http.get(this.rootUrl + 'random');
   }

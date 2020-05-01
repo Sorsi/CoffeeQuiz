@@ -1,2 +1,24 @@
 <app-navbar></app-navbar>
-<p>quiz works!</p>
+
+<div class="row">
+    <div class="col s8 offset-s2">
+
+        <div class="card cyan">
+            <div class="card-content white-text">
+                <span class="card-title">Question {{this.randomQuestionId}}</span>
+                <h5>{{this.question}}</h5>
+                <input type="text" id="answer">
+                <div>
+                    <label for="answer">Please type here your answer</label>
+                </div>
+                <p>{{this.answer}}</p>
+            </div>
+            <div class="card-action">
+                <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Send
+                    <i class="material-icons right">send</i>
+                  </button>
+            </div>
+        </div>
+
+    </div>
+</div>
