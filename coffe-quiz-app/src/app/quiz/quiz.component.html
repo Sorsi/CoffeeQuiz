@@ -11,12 +11,14 @@
                 <div>
                     <label for="answer">Please type here your answer</label>
                 </div>
-                <p>{{this.answer}}</p>
+                <p *ngIf="this.show">{{this.answer}}</p>
             </div>
             <div class="card-action">
                 <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Send
-                    <i class="material-icons right">send</i>
-                  </button>
+                </button>
+                <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3" type="button" name="action">
+                    Show answer
+                </button>
             </div>
         </div>
 

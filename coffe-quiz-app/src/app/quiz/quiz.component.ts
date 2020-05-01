@@ -13,7 +13,7 @@ export class QuizComponent implements OnInit {
   randomQuestionId: number;
   score: number;
   category: string;
-
+  show: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
@@ -31,6 +31,10 @@ export class QuizComponent implements OnInit {
         console.log(this.answer)
       }
     )
+  }
+
+  showRightAnswer(): any {
+    this.show = !this.show;
   }
 
 }
