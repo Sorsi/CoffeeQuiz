@@ -18,6 +18,10 @@ export class QuizComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
   ngOnInit(): void {
+    this.loadRandomQuestion();
+  }
+
+  loadRandomQuestion(): any {
     this.quizService.getrandomQuestion().subscribe(
       (data: any) => {
         console.log('random question', data)
@@ -35,6 +39,10 @@ export class QuizComponent implements OnInit {
 
   showRightAnswer(): any {
     this.show = !this.show;
+  }
+
+  showNextQuestion(): any {
+    this.loadRandomQuestion();
   }
 
 }
