@@ -13,20 +13,24 @@
                 <p *ngIf="show">{{answer}}</p>
             </div>
             <div class="card-action">
-                <button (click)="loadCategories()" class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Send
+                <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Send
                 </button>
-                <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3" type="button" name="action">
+                <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3"
+                    type="button" name="action">
                     Show answer
                 </button>
-                <button (click)="showNextQuestion()" class="btn waves-effect waves-light light-blue darken-3" type="button" name="action">
+                <button (click)="showNextQuestion()" class="btn waves-effect waves-light light-blue darken-3"
+                    type="button" name="action">
                     Next Question
                 </button>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <ul *ngFor="let category of categories">
-        <li>hah{{category.title}}</li>
-    </ul>
+
+<div class="form-group">
+    <select class="form-control">
+        <option *ngFor="let category of categories" #Origin (ngModel)="categories" value="{{category.title}}">
+            {{category.title}}</option>
+    </select>
 </div>

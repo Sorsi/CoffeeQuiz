@@ -22,6 +22,7 @@ export class QuizComponent implements OnInit {
     this.loadRandomQuestion();
     this.startTimer();
     this.quizService.seconds = 0;
+    this.loadCategories();
   }
 
   loadRandomQuestion(): any {
