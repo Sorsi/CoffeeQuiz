@@ -13,12 +13,14 @@ export class QuizComponent implements OnInit {
   randomQuestionId: number;
   score: number;
   category: string;
-  show: boolean = false;
+  show: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
   ngOnInit(): void {
     this.loadRandomQuestion();
+    this.startTimer();
+    this.quizService.seconds = 0;
   }
 
   loadRandomQuestion(): any {
@@ -34,15 +36,28 @@ export class QuizComponent implements OnInit {
         this.category = this.quizService.randomQuestion[0].category.title;
         console.log(this.answer)
       }
-    )
-  }
+      )
+    }
 
-  showRightAnswer(): any {
-    this.show = !this.show;
-  }
+    showRightAnswer(): any {
+      this.show = !this.show;
+    }
 
-  showNextQuestion(): any {
-    this.loadRandomQuestion();
-  }
+    showNextQuestion(): any {
+      this.show = false;
+      this.loadRandomQuestion();
+      this.quizService.seconds = 0;
+      this.displayTimeElapsed();
+    }
 
-}
+    startTimer() {
+      this.quizService.timer = setInterval(() => {
+        this.quizService.seconds++;
+      }, 1000);
+    }
+
+    displayTimeElapsed() {
+      return Math.floor(this.quizService.seconds / 3600) + ':' + Math.floor(this.quizService.seconds / 60) + ':' + Math.floor(this.quizService.seconds % 60);
+    }
+
+  }
