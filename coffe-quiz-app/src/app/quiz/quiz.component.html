@@ -29,8 +29,15 @@
 </div>
 
 <div class="form-group">
-    <select class="form-control">
-        <option *ngFor="let category of categories" #Origin (ngModel)="categories" value="{{category.title}}">
+    <select class="form-control" [(ngModel)]="selectedCategory" (change)="selectCategory()">
+        <option value="">Select a category</option>
+        <option *ngFor="let category of categories" #Origin [ngValue]="category">
             {{category.title}}</option>
     </select>
 </div>
+
+<p>{{selectedCategory | json}}</p>
+
+<ul *ngFor="let quest of selectedCategoryQuestions">
+    <li>{{quest.question}}</li>
+</ul>

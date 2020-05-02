@@ -14,8 +14,6 @@ export class QuizService {
   timer;
   seconds: number;
 
-
-
   constructor(private http: HttpClient) { }
 //----------------------------- Http Methods -----------------------------
   getRandomQuestion() {
@@ -24,5 +22,9 @@ export class QuizService {
 
   getCategories() {
     return this.http.get(`${this.rootUrl}categories?${params.toString()}`);
+  }
+
+  getSelectedCategory(selectedCategoryId: number) {
+    return this.http.get(`${this.rootUrl}category?id=${selectedCategoryId}`);
   }
 }
