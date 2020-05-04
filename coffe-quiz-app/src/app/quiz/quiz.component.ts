@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { QuizService } from '../shared/quiz.service';
 import { Category } from '../models/category';
+import { Clue } from '../models/clue';
 
 @Component({
   selector: 'app-quiz',
@@ -9,15 +10,13 @@ import { Category } from '../models/category';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
-  question: string;
-  answer: string;
-  randomQuestionId: number;
-  score: number;
   category: string;
   show: boolean;
   categories = [];
   selectedCategory: Category;
+  clue: Clue;
   selectedCategoryQuestions = [];
+  rightAnswer: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
@@ -29,7 +28,7 @@ export class QuizComponent implements OnInit {
   }
 
   selectCategory() {
-     this.quizService.getSelectedCategory(this.selectedCategory.id).subscribe(
+    this.quizService.getSelectedCategory(this.selectedCategory.id).subscribe(
       (data: any) => {
         console.log(data);
         this.selectedCategoryQuestions = data.clues;
@@ -41,13 +40,18 @@ export class QuizComponent implements OnInit {
     this.quizService.getRandomQuestion().subscribe(
       (data: any) => {
         console.log('random question', data)
-        this.quizService.randomQuestion = data;
-        this.question = this.quizService.randomQuestion[0].question;
-        this.answer = this.quizService.randomQuestion[0].answer;
-        this.randomQuestionId = this.quizService.randomQuestion[0].id;
-        this.score = this.quizService.randomQuestion[0].value;
-        this.category = this.quizService.randomQuestion[0].category.title;
-        console.log(this.answer)
+        this.clue = {
+          id: data[0].id,
+          answer: data[0].anser,
+          question: data[0].question,
+          value: data[0].value,
+          categoryId: data[0].category_id,
+          category: {
+            id: data[0].category.id,
+            title: data[0].category.title,
+            cluesCount: data[0].category.clues_count
+          }
+        }
       }
     )
   }
@@ -60,8 +64,15 @@ export class QuizComponent implements OnInit {
     )
   }
 
-  showRightAnswer(): any {
+  showRightAnswer(questId: number): any {
     this.show = !this.show;
+    this.selectedCategoryQuestions.forEach(e => {
+      console.log(e);
+      if (e.id === questId) {
+        console.log('riight answer rrrrrrrr', e.answer)
+        this.rightAnswer = e.answer;
+      }
+    });
   }
 
   showNextQuestion(): any {

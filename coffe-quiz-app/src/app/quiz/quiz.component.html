@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col s12">
         <div class="form-group">
             <select class="form-control" [(ngModel)]="selectedCategory" (change)="selectCategory()">
                 <option disabled selected value="undefined">Select a category</option>
@@ -12,23 +12,24 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
+<div *ngIf="!selectedCategory" class="row">
+    <div class="col s12">
         <span>Time Elapsed: {{displayTimeElapsed()}}</span>
         <div class="card cyan">
             <div class="card-content white-text">
-                <span class="card-title">Question {{randomQuestionId}}</span>
-                <h5>{{question}}</h5>
+                    <span class="card-title">Question {{clue.id}}</span>
+                    <span class="card-title">Category: {{clue.category.title}}</span>
+                <h5>{{clue.question}}</h5>
                 <input type="text" id="answer">
                 <div>
                     <label for="answer">Please type here your answer</label>
                 </div>
-                <p *ngIf="show">{{answer}}</p>
+                <p *ngIf="show">{{clue.answer}}</p>
             </div>
             <div class="card-action">
                 <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Validate
                 </button>
-                <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3"
+                <button (click)="showRightAnswer(clue.id)" class="btn waves-effect waves-light light-blue darken-3"
                     type="button" name="action">
                     Show answer
                 </button>
@@ -41,23 +42,24 @@
     </div>
 </div>
 
-<div class="row">
+<div *ngIf="selectedCategory" class="row">
     <div class="col-12" *ngFor="let quest of selectedCategoryQuestions">
         <span>Time Elapsed: {{displayTimeElapsed()}}</span>
         <div class="card cyan">
             <div class="card-content white-text">
                 <span class="card-title">Question {{quest.id}}</span>
+                <span class="card-title col-6">Category: {{selectedCategory.title}}</span>
                 <h5>{{quest.question}}</h5>
                 <input type="text" id="answer">
                 <div>
                     <label for="answer">Please type here your answer</label>
                 </div>
-                <p *ngIf="show">{{quest.answer}}</p>
+                <p *ngIf="show">{{rightAnswer}}</p>
             </div>
             <div class="card-action">
                 <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Validate
                 </button>
-                <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3"
+                <button (click)="showRightAnswer(quest.id)" class="btn waves-effect waves-light light-blue darken-3"
                     type="button" name="action">
                     Show answer
                 </button>
@@ -65,3 +67,16 @@
         </div>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">textsms</i>
+          <input type="text" id="autocomplete-input" class="autocomplete">
+          <label for="autocomplete-input">Autocomplete</label>
+        </div>
+      </div>
+    </div>
+  </div>

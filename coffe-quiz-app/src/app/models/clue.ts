@@ -1,6 +1,7 @@
 export interface Clue {
     id: number,
     answer: string,
+    question: string,
     value: number,
     categoryId: number,
     category: {
