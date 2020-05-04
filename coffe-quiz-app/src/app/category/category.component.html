@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="row">
+    <div class="col s12">
+        <div class="form-group">
+            <select class="form-control" [(ngModel)]="selectedCategory" (change)="selectCategory()">
+                <option disabled selected value="undefined">Select a category</option>
+                <option *ngFor="let category of categories" #Origin [ngValue]="category">
+                    {{category.title}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div *ngIf="selectedCategory" class="row">
+    <div class="col-12" *ngFor="let quest of selectedCategoryQuestions">
+        <div class="card cyan">
+            <div class="card-content white-text">
+                <span class="card-title">Question {{quest.id}}</span>
+                <span class="card-title col-6">Category: {{selectedCategory.title}}</span>
+                <h5>{{quest.question}}</h5>
+                <input type="text" id="answer">
+                <div>
+                    <label for="answer">Please type here your answer</label>
+                </div>
+                <p *ngIf="show">{{rightAnswer}}</p>
+            </div>
+            <div class="card-action">
+                <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Validate
+                </button>
+                <button (click)="showRightAnswer(quest.id)" class="btn waves-effect waves-light light-blue darken-3"
+                    type="button" name="action">
+                    Show answer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
