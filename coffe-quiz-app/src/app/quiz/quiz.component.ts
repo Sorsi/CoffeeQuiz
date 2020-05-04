@@ -29,8 +29,7 @@ export class QuizComponent implements OnInit {
   }
 
   selectCategory() {
-    console.log(this.selectedCategory.id);
-    this.quizService.getSelectedCategory(this.selectedCategory.id).subscribe(
+     this.quizService.getSelectedCategory(this.selectedCategory.id).subscribe(
       (data: any) => {
         console.log(data);
         this.selectedCategoryQuestions = data.clues;
@@ -56,7 +55,6 @@ export class QuizComponent implements OnInit {
   loadCategories(): any {
     this.quizService.getCategories().subscribe(
       (data: any) => {
-        console.log('categories -------------', data);
         this.categories = data;
       }
     )

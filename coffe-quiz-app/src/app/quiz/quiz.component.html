@@ -1,6 +1,19 @@
 <app-navbar></app-navbar>
+
 <div class="row">
-    <div class="col s8 offset-s2">
+    <div class="col-12">
+        <div class="form-group">
+            <select class="form-control" [(ngModel)]="selectedCategory" (change)="selectCategory()">
+                <option disabled selected value="undefined">Select a category</option>
+                <option *ngFor="let category of categories" #Origin [ngValue]="category">
+                    {{category.title}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
         <span>Time Elapsed: {{displayTimeElapsed()}}</span>
         <div class="card cyan">
             <div class="card-content white-text">
@@ -13,7 +26,7 @@
                 <p *ngIf="show">{{answer}}</p>
             </div>
             <div class="card-action">
-                <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Send
+                <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Validate
                 </button>
                 <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3"
                     type="button" name="action">
@@ -28,16 +41,27 @@
     </div>
 </div>
 
-<div class="form-group">
-    <select class="form-control" [(ngModel)]="selectedCategory" (change)="selectCategory()">
-        <option value="">Select a category</option>
-        <option *ngFor="let category of categories" #Origin [ngValue]="category">
-            {{category.title}}</option>
-    </select>
+<div class="row">
+    <div class="col-12" *ngFor="let quest of selectedCategoryQuestions">
+        <span>Time Elapsed: {{displayTimeElapsed()}}</span>
+        <div class="card cyan">
+            <div class="card-content white-text">
+                <span class="card-title">Question {{quest.id}}</span>
+                <h5>{{quest.question}}</h5>
+                <input type="text" id="answer">
+                <div>
+                    <label for="answer">Please type here your answer</label>
+                </div>
+                <p *ngIf="show">{{quest.answer}}</p>
+            </div>
+            <div class="card-action">
+                <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Validate
+                </button>
+                <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3"
+                    type="button" name="action">
+                    Show answer
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
-
-<p>{{selectedCategory | json}}</p>
-
-<ul *ngFor="let quest of selectedCategoryQuestions">
-    <li>{{quest.question}}</li>
-</ul>
