@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { QuizService } from '../shared/quiz.service';
 import { Clue } from '../models/clue';
+import { NgForm, FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-quiz',
@@ -13,7 +15,9 @@ export class QuizComponent implements OnInit {
   show: boolean = false;
   clue: Clue;
   submitted = false;
-  answer: string = 'whats your answer';
+  answerModel = {
+    answer: ''
+  }
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
@@ -41,6 +45,7 @@ export class QuizComponent implements OnInit {
   }
 
   showNextQuestion(): any {
+    this.answerModel.answer = null;
     this.show = false;
     this.loadRandomQuestion();
   }
@@ -51,13 +56,16 @@ export class QuizComponent implements OnInit {
 
   onSubmit(form, answer) {
     this.submitted = true;
-    console.log(form.value);
-    console.log(answer);
-    if (form.value.answer === answer) {
-      console.log('yout are realz clever', typeof(answer))
+    let userInput = form.value.answer.toLowerCase();
+    let realAnswer = answer.toLowerCase();
+    if (userInput === realAnswer) {
+      console.log('yout are realz clever', typeof (answer))
     } else {
-      console.log('yout are realz dummmm', typeof(answer))
-
+      console.log('yout are realz dummmm', typeof (answer))
     }
+  }
+
+  getCurrentModel() {
+    return JSON.stringify(this.answerModel);
   }
 }
