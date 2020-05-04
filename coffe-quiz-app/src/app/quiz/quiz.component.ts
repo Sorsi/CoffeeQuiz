@@ -22,8 +22,6 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRandomQuestion();
-    this.startTimer();
-    this.quizService.seconds = 0;
     this.loadCategories();
   }
 
@@ -78,18 +76,6 @@ export class QuizComponent implements OnInit {
   showNextQuestion(): any {
     this.show = false;
     this.loadRandomQuestion();
-    this.quizService.seconds = 0;
-    this.displayTimeElapsed();
-  }
-
-  startTimer() {
-    this.quizService.timer = setInterval(() => {
-      this.quizService.seconds++;
-    }, 1000);
-  }
-
-  displayTimeElapsed() {
-    return Math.floor(this.quizService.seconds / 3600) + ':' + Math.floor(this.quizService.seconds / 60) + ':' + Math.floor(this.quizService.seconds % 60);
   }
 
 }

@@ -11,8 +11,6 @@ export class QuizService {
 //----------------------------- Properties -----------------------------
   readonly rootUrl = 'http://jservice.io/api/';
   randomQuestion = [];
-  timer;
-  seconds: number;
 
   constructor(private http: HttpClient) { }
 //----------------------------- Http Methods -----------------------------
