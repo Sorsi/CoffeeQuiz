@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { QuizService } from '../shared/quiz.service';
-import { Category } from '../models/category';
 import { Clue } from '../models/clue';
 
 @Component({
@@ -11,36 +10,23 @@ import { Clue } from '../models/clue';
 })
 export class QuizComponent implements OnInit {
   category: string;
-  show: boolean;
-  categories = [];
-  selectedCategory: Category;
+  show: boolean = false;
   clue: Clue;
-  selectedCategoryQuestions = [];
-  rightAnswer: string;
+  submitted = false;
+  answer: string = 'whats your answer';
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
   ngOnInit(): void {
     this.loadRandomQuestion();
-    this.loadCategories();
-  }
-
-  selectCategory() {
-    this.quizService.getSelectedCategory(this.selectedCategory.id).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.selectedCategoryQuestions = data.clues;
-      }
-    )
   }
 
   loadRandomQuestion(): any {
     this.quizService.getRandomQuestion().subscribe(
       (data: any) => {
-        console.log('random question', data)
         this.clue = {
           id: data[0].id,
-          answer: data[0].anser,
+          answer: data[0].answer,
           question: data[0].question,
           value: data[0].value,
           categoryId: data[0].category_id,
@@ -54,28 +40,24 @@ export class QuizComponent implements OnInit {
     )
   }
 
-  loadCategories(): any {
-    this.quizService.getCategories().subscribe(
-      (data: any) => {
-        this.categories = data;
-      }
-    )
-  }
-
-  showRightAnswer(questId: number): any {
-    this.show = !this.show;
-    this.selectedCategoryQuestions.forEach(e => {
-      console.log(e);
-      if (e.id === questId) {
-        console.log('riight answer rrrrrrrr', e.answer)
-        this.rightAnswer = e.answer;
-      }
-    });
-  }
-
   showNextQuestion(): any {
     this.show = false;
     this.loadRandomQuestion();
   }
 
+  showRightAnswer(): any {
+    this.show = !this.show;
+  }
+
+  onSubmit(form, answer) {
+    this.submitted = true;
+    console.log(form.value);
+    console.log(answer);
+    if (form.value.answer === answer) {
+      console.log('yout are realz clever', typeof(answer))
+    } else {
+      console.log('yout are realz dummmm', typeof(answer))
+
+    }
+  }
 }
