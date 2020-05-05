@@ -8,5 +8,6 @@ export interface Clue {
         id: number,
         title: string,
         cluesCount: number,
-    }
+    },
+    shown: false,
 }

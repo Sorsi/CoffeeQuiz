@@ -39,7 +39,8 @@ export class QuizComponent implements OnInit {
             id: data[0].category.id,
             title: data[0].category.title,
             cluesCount: data[0].category.clues_count
-          }
+          },
+          shown: false,
         }
       }
     )
@@ -52,7 +53,6 @@ export class QuizComponent implements OnInit {
   }
 
   showRightAnswer(): any {
-    console.log('are you working show right answer function')
     this.show = !this.show;
   }
 
@@ -61,20 +61,16 @@ export class QuizComponent implements OnInit {
     let userInput = form.value.answer.toLowerCase().split(' ').join('').replace(/['"]+/g, '');
     let realAnswer = answer.toLowerCase().split(' ').join('').replace(/['"]+/g, '');
     if (userInput === realAnswer) {
-      console.log('you are really clever', typeof (answer))
       this.valid = true;
     } else {
-      console.log('you are really dummmm', typeof (answer))
       this.valid = false;
     }
   }
 
   getSeconds(secondsForm) {
     let s = secondsForm.value.seconds * 1000;
-    console.log('heyyyyy', s);
     setTimeout(() => {
       this.show = true;
-    console.log('ho', s);
     }, s);
   }
 }

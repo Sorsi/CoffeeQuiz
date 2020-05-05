@@ -12,22 +12,22 @@
     </div>
 </div>
 <div *ngIf="selectedCategory" class="row">
-    <div class="col-12" *ngFor="let quest of selectedCategoryQuestions">
+    <div class="col-12" *ngFor="let clue of selectedCategoryClues">
         <div class="card cyan">
             <div class="card-content white-text">
-                <span class="card-title">Question {{quest.id}}</span>
-                <span class="card-title col-6">Category: {{selectedCategory.title}}</span>
-                <h5>{{quest.question}}</h5>
+                <span class="card-title">Question {{clue.id}}</span>
+                <span class="card-title col-6">Category: {{clue.category.title}}</span>
+                <h5>{{clue.question}}</h5>
                 <input type="text" id="answer">
                 <div>
                     <label for="answer">Please type here your answer</label>
                 </div>
-                <p *ngIf="show">{{rightAnswer}}</p>
+                <p *ngIf="clue.shown">{{clue.answer}}</p>
             </div>
             <div class="card-action">
                 <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Validate
                 </button>
-                <button (click)="showRightAnswer(quest.id)" class="btn waves-effect waves-light light-blue darken-3"
+                <button (click)="showRightAnswer(clue)" class="btn waves-effect waves-light light-blue darken-3"
                     type="button" name="action">
                     Show answer
                 </button>
