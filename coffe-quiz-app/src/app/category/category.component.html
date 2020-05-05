@@ -1,5 +1,10 @@
 <app-navbar></app-navbar>
 
+<input type="text" (keyup)="getCategoryId($event)" id="categoryId" list="dynamicCategoryId">
+<datalist id="dynamicCategoryId">
+    <option *ngFor="let categoryTitle of categoryTitlesList" [value]="categoryTitle">{{categoryTitle}}</option>
+</datalist>
+
 <div class="row">
     <div class="col s12">
         <div class="form-group">

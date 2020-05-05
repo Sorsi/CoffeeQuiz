@@ -42,8 +42,10 @@ export class QuizComponent implements OnInit {
           },
           shown: false,
         }
-      }
-    )
+      },
+      error => {
+        console.log("Something wrong here");
+      });
   }
 
   showNextQuestion(): any {

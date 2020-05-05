@@ -17,6 +17,8 @@ export class CategoryComponent implements OnInit {
   show: boolean;
   rightAnswer: string
   selectedClue: Clue;
+  lastkeydown: number = 0;
+  categoryTitlesList: string[] = [];
 
   constructor(private quizService: QuizService) { }
 
@@ -25,6 +27,7 @@ export class CategoryComponent implements OnInit {
   }
 
   selectCategory() {
+    let selectedCategoryClues = [];
     this.quizService.getSelectedCategory(this.selectedCategory.id).subscribe(
       (data: any) => {
         this.selectedClues = data.clues;
@@ -42,11 +45,14 @@ export class CategoryComponent implements OnInit {
             },
             shown: false,
           }
-          this.selectedCategoryClues.push(this.selectedClue);
+          selectedCategoryClues.push(this.selectedClue);
         }
-        return this.selectedCategoryClues;
-      }
-    )
+        return selectedCategoryClues;
+      },
+      error => {
+        console.log("Something wrong here");
+      });
+    this.selectedCategoryClues = selectedCategoryClues;
   }
 
   showRightAnswer(clue): any {
@@ -54,10 +60,38 @@ export class CategoryComponent implements OnInit {
   }
 
   loadCategories(): any {
+    let categoryTitlesList = [];
     this.quizService.getCategories().subscribe(
       (data: any) => {
         this.categories = data;
-      }
-    )
+        this.categories.forEach(e => {
+          categoryTitlesList.push(e.title);
+        })
+      },
+      error => {
+        console.log("Something wrong here");
+      });
+    this.categoryTitlesList = categoryTitlesList;
   }
+
+  getCategoryId($event) {
+    let categoryId = (<HTMLInputElement>document.getElementById('categoryId')).value;
+    this.categories = [];
+    if (categoryId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown > 200) {
+        this.categories = this.searchFromArray(this.categoryTitlesList, categoryId);
+      }
+    }
+  }
+
+  searchFromArray(arr, regex) {
+    let matches = [], i;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
 }
