@@ -68,4 +68,14 @@ export class QuizComponent implements OnInit {
   getCurrentModel() {
     return JSON.stringify(this.answerModel);
   }
+
+  getSeconds(secondsForm) {
+    let s = secondsForm.value.seconds * 1000;
+    console.log('heyyyyy', s);
+    setTimeout(() => {
+      this.show = true;
+    console.log('ho', s);
+    }, s);
+  }
+
 }
