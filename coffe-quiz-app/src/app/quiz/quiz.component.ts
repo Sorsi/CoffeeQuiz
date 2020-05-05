@@ -18,6 +18,7 @@ export class QuizComponent implements OnInit {
   answerModel = {
     answer: ''
   }
+  valid: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService) { }
 
@@ -51,22 +52,21 @@ export class QuizComponent implements OnInit {
   }
 
   showRightAnswer(): any {
+    console.log('are you working show right answer function')
     this.show = !this.show;
   }
 
-  onSubmit(form, answer) {
+  validate(form: NgForm, answer) {
     this.submitted = true;
-    let userInput = form.value.answer.toLowerCase();
-    let realAnswer = answer.toLowerCase();
+    let userInput = form.value.answer.toLowerCase().split(' ').join('').replace(/['"]+/g, '');
+    let realAnswer = answer.toLowerCase().split(' ').join('').replace(/['"]+/g, '');
     if (userInput === realAnswer) {
-      console.log('yout are realz clever', typeof (answer))
+      console.log('you are really clever', typeof (answer))
+      this.valid = true;
     } else {
-      console.log('yout are realz dummmm', typeof (answer))
+      console.log('you are really dummmm', typeof (answer))
+      this.valid = false;
     }
-  }
-
-  getCurrentModel() {
-    return JSON.stringify(this.answerModel);
   }
 
   getSeconds(secondsForm) {
@@ -77,5 +77,4 @@ export class QuizComponent implements OnInit {
     console.log('ho', s);
     }, s);
   }
-
 }

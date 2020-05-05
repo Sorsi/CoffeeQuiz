@@ -1,18 +1,18 @@
 <app-navbar></app-navbar>
 
 <form (ngSubmit)="getSeconds(secondsForm)" #secondsForm="ngForm">
-<div class="input-field col s12">
-    <input type="text" name="seconds" (ngModel)="secondsForm" #seconds>
-    <label for="seconds">I'd like to see the right answer after (seconds): </label>
-    <button class="btn waves-effect waves-light light-blue darken-3" type="submit">Ok</button>
-</div>
+    <div class="input-field col s12">
+        <input type="text" name="seconds" (ngModel)="secondsForm" #seconds>
+        <label for="seconds">I'd like to see the right answer after (seconds): </label>
+        <button class="btn waves-effect waves-light light-blue darken-3" type="submit">Set</button>
+    </div>
 </form>
 
 
 <div class="row">
     <div class="col s12">
         <div class="card cyan">
-            <form (ngSubmit)="onSubmit(answerModelForm, clue.answer)" #answerModelForm="ngForm">
+            <form (ngSubmit)="validate(answerModelForm, clue.answer)" #answerModelForm="ngForm">
                 <div class="card-content white-text">
                     <span class="card-title">Question {{clue?.id}}</span>
                     <span class="card-title">Category: {{clue?.category.title}}</span>
@@ -20,16 +20,13 @@
                     <div class="form-group">
                         <div class="input-field col s12">
                             <input class="validate" type="text" name="answer" [(ngModel)]="answerModel.answer" required
-                                #answer>
-                            <label for="answer">Please type here your answer</label>
+                                #answer [className]="valid ? 'valid' : 'invalid'">
+                            <label for="answer">Your answer:</label>
                             <span class="helper-text" data-error="wrong" data-success="right"></span>
                         </div>
                         <p class="alert" *ngIf="!answer.valid && answer.touched">Please provide an answer</p>
+                        <p *ngIf="show">{{clue?.answer}}</p>
                     </div>
-                    <pre> get current model{{ getCurrentModel() }}</pre>
-                    {{answerModelForm.value | json}}
-                    {{answerModelForm.valid}}
-                    <p *ngIf="show">{{clue?.answer}}</p>
                 </div>
                 <div class="card-action">
                     <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action"
@@ -37,7 +34,7 @@
                     </button>
                     <button (click)="showRightAnswer()" class="btn waves-effect waves-light light-blue darken-3"
                         type="button" name="action">
-                        Show/Hide answer
+                        Show answer
                     </button>
                     <button (click)="showNextQuestion()" class="btn waves-effect waves-light light-blue darken-3"
                         type="button" name="action" [disabled]="!answerModelForm.form.valid">
