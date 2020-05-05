@@ -19,6 +19,7 @@ export class CategoryComponent implements OnInit {
   selectedClue: Clue;
   lastkeydown: number = 0;
   categoryTitlesList: string[] = [];
+  titleMatches = [];
 
   constructor(private quizService: QuizService) { }
 
@@ -76,10 +77,10 @@ export class CategoryComponent implements OnInit {
 
   getCategoryId($event) {
     let categoryId = (<HTMLInputElement>document.getElementById('categoryId')).value;
-    this.categories = [];
+    this.titleMatches = [];
     if (categoryId.length > 2) {
       if ($event.timeStamp - this.lastkeydown > 200) {
-        this.categories = this.searchFromArray(this.categoryTitlesList, categoryId);
+        this.titleMatches = this.searchFromArray(this.categoryTitlesList, categoryId);
       }
     }
   }
