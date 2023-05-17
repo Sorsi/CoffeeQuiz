@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/https://sorsi.github.io/CoffeeQuiz/",
             "outputPath": "dist/coffe-quiz-app",
             "index": "src/index.html",
             "main": "src/main.ts",
